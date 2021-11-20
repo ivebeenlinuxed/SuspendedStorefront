@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+import { ProductSubscription } from './product-subscription';
 export interface Customer {
   address1?: null | string;
   address2?: null | string;
@@ -9,4 +10,5 @@ export interface Customer {
   isActive?: boolean;
   name?: null | string;
   postalCode?: null | string;
+  productSubscriptions?: null | Array<ProductSubscription>;
 }

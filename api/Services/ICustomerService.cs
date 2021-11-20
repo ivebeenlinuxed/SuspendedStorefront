@@ -8,5 +8,6 @@ namespace SuspendedStorefront.Services
         Task<Customer> GetByIDAsync(Guid id);
         Task<Customer> UpdateAsync(Customer c);
         Task<Product> GetProductAsCustomer(Guid productID, Guid customerID);
+        Task<Customer> GetByLoginIDAsync(string loginID);
     }
 }

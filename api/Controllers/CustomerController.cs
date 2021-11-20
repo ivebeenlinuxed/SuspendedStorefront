@@ -1,4 +1,6 @@
 using System.Net.Mime;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SuspendedStorefront.Models;
@@ -6,6 +8,7 @@ using SuspendedStorefront.Services;
 
 namespace SuspendedStorefront.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("/api/[controller]")]
 public class CustomerController : ControllerBase {
@@ -32,6 +35,11 @@ public class CustomerController : ControllerBase {
             return CreatedAtAction(nameof(GetByID), new { id = c.ID }, c);
 
         }
+
+        [HttpGet("me")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<Customer> GetMe() =>
+            await this.customerService.GetByLoginIDAsync(HttpContext.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

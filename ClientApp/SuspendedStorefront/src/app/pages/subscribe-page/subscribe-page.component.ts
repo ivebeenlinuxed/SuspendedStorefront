@@ -24,7 +24,7 @@ export class SubscribePageComponent implements OnInit {
   }
 
   loadSubscription(id : string) {
-    this.productService.apiProductIdGet$Json({ id: id, customerID: this.authSerice.identityClaims["sub"] }).subscribe((p) => this.product = p);
+    this.productService.apiProductIdGet$Json({ id: id, customerID: (<any>this.authSerice.identityClaims).sub }).subscribe((p) => this.product = p);
   }
 
 }

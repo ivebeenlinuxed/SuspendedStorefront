@@ -16,6 +16,8 @@ using SuspendedStorefront.Services;
 using SuspendedStorefront.Services.Implementations;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
+using System.Security.Claims;
+using Newtonsoft.Json.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,7 @@ builder.Host.UseSerilog();
 builder.Services.AddScoped<ICharityService, CharityService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOpenIDService, OpenIDService>();
 builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddControllers()
         .AddJsonOptions(
@@ -41,7 +44,7 @@ builder.Services.AddAuthentication(options =>
 }).AddJwtBearer(options =>
 {
     options.Authority = "https://ivebeenlinuxed.eu.auth0.com/";
-    options.Audience = "https://api.mtk.yottaops.io";
+    options.Audience = "https://api.mtc.yottaops.io";
 });
 
 builder.Services.AddDbContext<StoreDbContext>(options =>
@@ -93,6 +96,37 @@ app.UseHttpsRedirection();
 
 
 app.UseCors();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.Use(async (context, next) =>
+{
+    using (IServiceScope scope = app.Services.CreateScope())
+    {
+        if (context.Request.Headers.ContainsKey("Authorization")) {
+            string userID = context.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            ICustomerService userService = scope.ServiceProvider.GetRequiredService<ICustomerService>();
+            if (await userService.GetByLoginIDAsync(userID) == null)
+            {
+                IOpenIDService openID = scope.ServiceProvider.GetRequiredService<IOpenIDService>();
+                JObject profile = (await openID.GetProfileAsync(
+                        context.Request.Headers.Authorization.ToString().Replace("Bearer ", ""),
+                        "https://ivebeenlinuxed.eu.auth0.com/userinfo"));
+
+                Customer c = new Customer()
+                {
+                    Name = profile["nickname"].ToString(),
+                    PictureURL = profile["picture"].ToString(),
+                    AuthID = userID
+                };
+                await userService.AddCustomerAsync(c);
+            }
+        }
+    }
+    await next.Invoke();
+    
+});
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();

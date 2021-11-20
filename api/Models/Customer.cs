@@ -2,7 +2,10 @@ namespace SuspendedStorefront.Models
 {
     public class Customer {
         public Guid ID { get; set; }
+
+        public string AuthID { get; set; }
         public string Name { get; set; }
+        public string PictureURL { get; set; }
         public string Address1 { get; set; } = "";
         public string Address2 { get; set; } = "";
         public string City { get; set; } = "";

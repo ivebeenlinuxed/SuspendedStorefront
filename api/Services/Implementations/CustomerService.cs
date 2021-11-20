@@ -27,6 +27,11 @@ class CustomerService : ICustomerService
         return await ctx.Customers.Where(c => c.IsActive).ToListAsync();
     }
 
+    public async Task<Customer> GetByLoginIDAsync(string loginID) {
+        Customer c = await ctx.Customers.FirstOrDefaultAsync(c => c.AuthID == loginID);
+        return c;
+    }
+
     public async Task<Customer> GetByIDAsync(Guid id)
     {
         return await ctx.Customers.Include(c => c.ProductSubscriptions).FirstOrDefaultAsync(c => c.ID == id);

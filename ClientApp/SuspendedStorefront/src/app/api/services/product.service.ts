@@ -203,11 +203,13 @@ export class ProductService extends BaseService {
    */
   apiProductIdGet$Plain$Response(params: {
     id: string;
+    customerID?: string;
   }): Observable<StrictHttpResponse<Product>> {
 
     const rb = new RequestBuilder(this.rootUrl, ProductService.ApiProductIdGetPath, 'get');
     if (params) {
       rb.path('id', params.id, {});
+      rb.query('customerID', params.customerID, {});
     }
 
     return this.http.request(rb.build({
@@ -229,6 +231,7 @@ export class ProductService extends BaseService {
    */
   apiProductIdGet$Plain(params: {
     id: string;
+    customerID?: string;
   }): Observable<Product> {
 
     return this.apiProductIdGet$Plain$Response(params).pipe(
@@ -244,11 +247,13 @@ export class ProductService extends BaseService {
    */
   apiProductIdGet$Json$Response(params: {
     id: string;
+    customerID?: string;
   }): Observable<StrictHttpResponse<Product>> {
 
     const rb = new RequestBuilder(this.rootUrl, ProductService.ApiProductIdGetPath, 'get');
     if (params) {
       rb.path('id', params.id, {});
+      rb.query('customerID', params.customerID, {});
     }
 
     return this.http.request(rb.build({
@@ -270,6 +275,7 @@ export class ProductService extends BaseService {
    */
   apiProductIdGet$Json(params: {
     id: string;
+    customerID?: string;
   }): Observable<Product> {
 
     return this.apiProductIdGet$Json$Response(params).pipe(
