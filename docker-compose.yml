@@ -24,6 +24,13 @@ services:
     depends_on:
       - mysql
     ports:
-      - 80:8080
+      - 8080:80
+  mtc_angular:
+    image: registry.yottaops.io:5000/mtc_angular
+    build:
+        context: ClientApp/SuspendedStorefront
+        dockerfile: ./Dockerfile
+    ports:
+      - 80:80
 networks:
   suspendedstore-api:

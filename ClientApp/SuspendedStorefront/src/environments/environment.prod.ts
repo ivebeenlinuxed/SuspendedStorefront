@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  API_LOCATION: 'https://api.mtc.yottaops.io'
 };

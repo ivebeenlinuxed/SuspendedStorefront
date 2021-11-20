@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/api/models';
+import { ProductService } from 'src/app/api/services';
 
 @Component({
   selector: 'app-home-page',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-
-  constructor() { }
+  public productList: Product[] = [];
+  constructor(private productService : ProductService) { }
 
   ngOnInit(): void {
+    this.productService.apiProductGet$Json().subscribe(pl => this.productList = pl);
   }
 
 }
