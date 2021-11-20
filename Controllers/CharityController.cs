@@ -7,8 +7,9 @@ using SuspendedStorefront.Services;
 
 namespace SuspendedStorefront.Controllers
 {
-
-    class CharityController : ControllerBase
+    [ApiController]
+    [Route("/api/[controller]")]
+    public class CharityController : ControllerBase
     {
         private readonly ICharityService charityService;
 

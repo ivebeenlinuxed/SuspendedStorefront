@@ -11,6 +11,9 @@ using Serilog;
 using SuspendedStorefront.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using SuspendedStorefront.Services;
+using SuspendedStorefront.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,12 +23,26 @@ Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configurat
 builder.Host.UseSerilog();
 
 // Add services to the container.
+builder.Services.AddScoped<ICharityService, CharityService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
+builder.Services.AddControllers();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.Authority = "https://ivebeenlinuxed.eu.auth0.com/";
+    options.Audience = "https://api.mtk.yottaops.io";
+});
 
 builder.Services.AddDbContext<StoreDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("StoreDbContext"));
+    string connectString = builder.Configuration.GetConnectionString("StoreDbContext");
+    options.UseMySql(connectString, ServerVersion.AutoDetect(connectString), opt => {});
 });
 
 var app = builder.Build();
@@ -41,16 +58,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-
-
-
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");;
 
 app.Run();

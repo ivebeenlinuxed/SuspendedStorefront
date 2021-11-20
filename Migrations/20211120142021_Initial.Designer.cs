@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuspendedStorefront.Models;
@@ -12,7 +11,7 @@ using SuspendedStorefront.Models;
 namespace SuspendedStorefront.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20211120112654_Initial")]
+    [Migration("20211120142021_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,18 +19,19 @@ namespace SuspendedStorefront.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("SuspendedStorefront.Models.Charity", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("CharityName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("ID");
 
@@ -42,13 +42,16 @@ namespace SuspendedStorefront.Migrations
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("CharityID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("WeeklyQuantity")
                         .HasColumnType("int");
@@ -62,25 +65,28 @@ namespace SuspendedStorefront.Migrations
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Address1")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Address2")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("County")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ID");
 
@@ -91,13 +97,16 @@ namespace SuspendedStorefront.Migrations
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
-                    b.Property<string>("ProductName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
-                    b.Property<decimal>("ProductPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
 
                     b.HasKey("ID");
 
@@ -108,10 +117,13 @@ namespace SuspendedStorefront.Migrations
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("FridayQuantity")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("MaxSuspendedQuantity")
                         .HasColumnType("int");
@@ -119,11 +131,14 @@ namespace SuspendedStorefront.Migrations
                     b.Property<int>("MondayQuantity")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("PreviousSubscriptionID")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("RecurringBasketID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("SaturdayQuantity")
                         .HasColumnType("int");
@@ -149,31 +164,31 @@ namespace SuspendedStorefront.Migrations
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Address1")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Address2")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("CharityQtyFulfilled")
                         .HasColumnType("int");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("County")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("CustomerQtyFulfilled")
                         .HasColumnType("int");
 
                     b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<Guid>("ProductSubscriptionID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.HasKey("ID");
 

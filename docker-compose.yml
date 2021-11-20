@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  mysql:
+    image: mariadb:latest
+    environment:
+      - MARIADB_USER=dev_user
+      - MARIADB_PASSWORD=dev_pass
+      - MARIADB_ROOT_PASSWORD=my-secret-pw
+    networks:
+      - suspendedstore-api
+    ports:
+      - 3306:3306
+  mtc_api:
+    image: registry.yottaops.io:5000/mtc_api
+    build:
+        dockerfile: ./Dockerfile
+    environment:
+      - MYSQL_SERVER=mysql
+      - MYSQL_PORT=3306
+      - ConnectionStrings__StoreDbContext=Server=server=mysql;port=3306;user=dev_user;password=dev_pass;database=mtc_db
+    networks:
+      - suspendedstore-api
+    depends_on:
+      - mysql
+    ports:
+      - 80:8080
+networks:
+  suspendedstore-api:
