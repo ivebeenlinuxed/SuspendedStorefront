@@ -1,9 +1,14 @@
 namespace SuspendedStorefront.Models
 {
-    public class CustomerAddress
+    public class ProductSubscriptionReceipt
     {
         public Guid ID { get; set; }
-        public Guid CustomerID { get; set; }
+
+        public Guid ProductSubscriptionID { get; set; }
+
+        public int CustomerQtyFulfilled { get; set; }
+
+        public int CharityQtyFulfilled { get; set; }
         public string Address1 { get; set; } = "";
         public string Address2 { get; set; } = "";
         public string City { get; set; } = "";
