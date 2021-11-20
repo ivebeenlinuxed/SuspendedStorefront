@@ -83,7 +83,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
+
+
+app.UseCors();
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();
