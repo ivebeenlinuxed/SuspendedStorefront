@@ -4,5 +4,7 @@ namespace SuspendedStorefront.Models
         public Guid ID { get; set; }
         public string CharityName { get; set; }
 
+        public bool IsActive { get; set; }
+
     }
 }

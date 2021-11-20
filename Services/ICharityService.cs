@@ -1,11 +1,18 @@
+using System.Threading.Tasks;
+using SuspendedStorefront.Controllers;
 using SuspendedStorefront.Models;
 
 namespace SuspendedStorefront.Services
 {
     public interface ICharityService {
-        Charity RegisterCharity();
-        CharityProduct RequestDonation(CharityProduct charityProduct);
+        Task<Charity> RegisterCharityAsync(Charity charity);
+        Task<CharityProduct> RequestDonationAsync(CharityProduct charityProduct);
 
-        Charity GetByID(Guid ID);
+        Task<Charity> GetByIDAsync(Guid ID);
+
+        Task<Charity> UpdateAsync(Charity c);
+
+        Task SetInactiveByIDAsync(Guid ID);
+        Task<IEnumerable<Charity>> GetActiveAsync();
     }
 }
