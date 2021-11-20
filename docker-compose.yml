@@ -13,6 +13,7 @@ services:
   mtc_api:
     image: registry.yottaops.io:5000/mtc_api
     build:
+        context: api/
         dockerfile: ./Dockerfile
     environment:
       - MYSQL_SERVER=mysql
