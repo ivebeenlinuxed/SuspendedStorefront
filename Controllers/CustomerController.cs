@@ -36,7 +36,7 @@ class CustomerController : ControllerBase {
 
         [HttpPatch("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(Product),StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(Customer),StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Update(Guid id, [FromBody] Customer c)
         {
@@ -44,7 +44,7 @@ class CustomerController : ControllerBase {
             {
                 return BadRequest("ID does not match the model");
             }
-            Product updatedCustomer = await this.customerService.UpdateAsync(c);
+            Customer updatedCustomer = await this.customerService.UpdateAsync(c);
             return CreatedAtAction(nameof(GetByID), new { id = updatedCustomer.ID }, updatedCustomer);
 
         }

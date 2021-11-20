@@ -12,7 +12,7 @@ namespace SuspendedStorefront.Services
 
         Task<Charity> UpdateAsync(Charity c);
 
-        Task SetInactiveByIDAsync(Guid ID);
+        Task<Charity> SetInactiveByIDAsync(Guid ID);
         Task<IEnumerable<Charity>> GetActiveAsync();
     }
 }

@@ -26,7 +26,7 @@ class SubscriptionController : ControllerBase {
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] ProductSubscription subscription)
         {
-            Product p = await this.subscriptionService.AddSubscriptionAsync(subscription);
+            ProductSubscription p = await this.subscriptionService.AddSubscriptionAsync(subscription);
             return CreatedAtAction(nameof(GetByID), new { id = p.ID }, p);
 
         }

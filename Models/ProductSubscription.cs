@@ -7,6 +7,10 @@ namespace SuspendedStorefront.Models
 
         public Guid ProductID { get; set; }
 
+        public bool IsActive { get; set; }
+
+        public Guid PreviousSubscriptionID { get; set; }
+
         public int MondayQuantity { get; set; }
         public int TuesdayQuantity { get; set; }
         public int WednesdayQuantity { get; set; }

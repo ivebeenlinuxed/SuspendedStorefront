@@ -8,5 +8,7 @@ namespace SuspendedStorefront.Models
         public Guid ProductID { get; set; }
 
         public int WeeklyQuantity { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }
