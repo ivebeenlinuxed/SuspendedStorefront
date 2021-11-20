@@ -1,2 +1,20 @@
-TEST HERE
-<app-product-add></app-product-add>
+<div class="container">
+    <h2>Add a Product</h2>
+    <app-product-add></app-product-add>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of this.productList">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

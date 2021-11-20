@@ -9,6 +9,7 @@ import { ProductAddComponent } from './components/admin/product-add/product-add.
 import { ApiModule } from './api/api.module';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     ApiModule.forRoot({ rootUrl: environment.API_LOCATION }),
   ],
   providers: [],

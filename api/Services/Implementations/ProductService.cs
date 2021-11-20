@@ -15,6 +15,7 @@ class ProductService : IProductService
     public async Task<Product> AddProductAsync(Product product)
     {
         product.ID = Guid.NewGuid();
+        product.IsActive = true;
         this.ctx.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Added;
         await this.ctx.SaveChangesAsync();
         return product;
