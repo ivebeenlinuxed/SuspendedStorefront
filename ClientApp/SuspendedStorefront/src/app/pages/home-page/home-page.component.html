@@ -33,7 +33,7 @@
               <h5 class="card-title">{{item.name}}</h5>
               <p class="card-text">&pound;{{item.price}}</p>
               <div class="d-grid">
-                <a href="#" class="btn btn-primary">Buy or Donate</a>
+                <a [routerLink]="'/subscribe/'+item.id" class="btn btn-primary">Buy or Donate</a>
             </div>
             </div>
           </div>

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using SuspendedStorefront.Services;
 using SuspendedStorefront.Services.Implementations;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,10 @@ builder.Services.AddScoped<ICharityService, CharityService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+        .AddJsonOptions(
+            options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+        );
 
 builder.Services.AddAuthentication(options =>
 {
@@ -68,6 +72,7 @@ builder.Services.AddCors(options =>
             cors_build.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(origin => true);
         });
     });
+
 
 
 var app = builder.Build();

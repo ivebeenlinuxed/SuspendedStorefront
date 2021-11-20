@@ -7,5 +7,7 @@ namespace SuspendedStorefront.Models
 
         public decimal Price { get; set; }
         public bool IsActive { get; set; }
+
+        public IEnumerable<ProductSubscription> Subscriptions { get; set; }
     }
 }

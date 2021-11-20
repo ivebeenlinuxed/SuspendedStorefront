@@ -7,6 +7,8 @@ namespace SuspendedStorefront.Models
 
         public Guid ProductID { get; set; }
 
+        public Guid CustomerID { get; set; }
+
         public bool IsActive { get; set; }
 
         public Guid PreviousSubscriptionID { get; set; }
@@ -20,6 +22,9 @@ namespace SuspendedStorefront.Models
         public int SundayQuantity { get; set; }
 
         public int MaxSuspendedQuantity { get; set; }
+
+        public Customer Customer { get; set; }
+        public Product Product { get; set; }
 
 
     }

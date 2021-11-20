@@ -5,7 +5,7 @@ namespace SuspendedStorefront.Models
     class StoreDbContext : DbContext
     {
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options) {
-
+            
         }
         public DbSet<Charity> Charities { get; set; }
         public DbSet<CharityProduct> CharityProducts { get; set; }

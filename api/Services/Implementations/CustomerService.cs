@@ -16,6 +16,7 @@ class CustomerService : ICustomerService
     public async Task<Customer> AddCustomerAsync(Customer customer)
     {
         customer.ID = Guid.NewGuid();
+        customer.IsActive = true;
         ctx.Entry(customer).State = EntityState.Added;
         await ctx.SaveChangesAsync();
         return customer;
@@ -28,7 +29,13 @@ class CustomerService : ICustomerService
 
     public async Task<Customer> GetByIDAsync(Guid id)
     {
-        return await ctx.Customers.FirstOrDefaultAsync(c => c.ID == id);
+        return await ctx.Customers.Include(c => c.ProductSubscriptions).FirstOrDefaultAsync(c => c.ID == id);
+    }
+
+    public async Task<Product> GetProductAsCustomer(Guid productID, Guid customerID) {
+        Product p = await ctx.Products.FirstOrDefaultAsync(p => p.ID == productID);
+        p.Subscriptions = await ctx.ProductSubscriptions.Where(ps => ps.ProductID == productID && ps.CustomerID == customerID).ToListAsync();
+        return p;
     }
 
     public async Task<Customer> UpdateAsync(Customer c)

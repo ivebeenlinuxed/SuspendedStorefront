@@ -9,5 +9,7 @@ namespace SuspendedStorefront.Models
         public string County { get; set; } = "";
         public string PostalCode { get; set; } = "";
         public bool IsActive { get; set; }
+
+        public IEnumerable<ProductSubscription> ProductSubscriptions { get; set; }
     }
 }

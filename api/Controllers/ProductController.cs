@@ -11,10 +11,12 @@ namespace SuspendedStorefront.Controllers;
 [Route("/api/[controller]")]
 public class ProductController : ControllerBase {
     private readonly IProductService productService;
+    private readonly ICustomerService customerService;
 
-    public ProductController(IProductService productService)
+    public ProductController(IProductService productService, ICustomerService customerService)
     {
         this.productService = productService;
+        this.customerService = customerService;
     }
 
         [HttpGet]
@@ -36,8 +38,16 @@ public class ProductController : ControllerBase {
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<Product> GetByID(Guid id) =>
-            await this.productService.GetByIDAsync(id);
+        public async Task<Product> GetByID(Guid id, [FromQuery]Guid? customerID=null) {
+            if (customerID != null)
+            {
+                return await this.customerService.GetProductAsCustomer(id, (Guid)customerID);
+            } else {
+                
+                return await this.productService.GetByIDAsync(id);
+            }
+        }
+
 
         [HttpPatch("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
