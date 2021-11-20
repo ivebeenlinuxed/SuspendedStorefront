@@ -61,10 +61,20 @@ builder.Services.AddSwaggerGen(c =>
 	});
 });
 
+builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("CorsPolicy", cors_build =>
+        {
+            cors_build.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(origin => true);
+        });
+    });
+
+
 var app = builder.Build();
 using (IServiceScope scope = app.Services.CreateScope()) {
     scope.ServiceProvider.GetRequiredService<StoreDbContext>().Database.Migrate();
 }
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
