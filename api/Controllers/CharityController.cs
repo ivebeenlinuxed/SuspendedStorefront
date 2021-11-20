@@ -36,6 +36,8 @@ namespace SuspendedStorefront.Controllers
 
         }
 
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<Charity> GetByID(Guid id) =>
             await this.charityService.GetByIDAsync(id);
 

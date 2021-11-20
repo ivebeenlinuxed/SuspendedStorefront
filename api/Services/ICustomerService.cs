@@ -2,7 +2,7 @@ using SuspendedStorefront.Models;
 
 namespace SuspendedStorefront.Services
 {
-    interface ICustomerService {
+    public interface ICustomerService {
         Task<IEnumerable<Customer>> GetActiveAsync();
         Task<Customer> AddCustomerAsync(Customer customer);
         Task<Customer> GetByIDAsync(Guid id);

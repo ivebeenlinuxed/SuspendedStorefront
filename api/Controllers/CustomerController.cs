@@ -6,7 +6,9 @@ using SuspendedStorefront.Services;
 
 namespace SuspendedStorefront.Controllers;
 
-class CustomerController : ControllerBase {
+[ApiController]
+[Route("/api/[controller]")]
+public class CustomerController : ControllerBase {
     private readonly ICustomerService customerService;
 
     public CustomerController(ICustomerService customerService)
@@ -31,6 +33,8 @@ class CustomerController : ControllerBase {
 
         }
 
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<Customer> GetByID(Guid id) =>
             await this.customerService.GetByIDAsync(id);
 

@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using SuspendedStorefront.Services;
 using SuspendedStorefront.Services.Implementations;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,21 @@ builder.Services.AddDbContext<StoreDbContext>(options =>
     options.UseMySql(connectString, ServerVersion.AutoDetect(connectString), opt => {});
 });
 
+builder.Services.AddSwaggerGen(c =>
+{
+	c.SwaggerDoc("v1", new OpenApiInfo { 
+		Title = "SuspendedStorefront API", 
+		Version = "v1",
+		Description ="Description for the API goes here.",
+		Contact = new OpenApiContact
+		{
+			Name = "Will Tinsdeall",
+			Email = string.Empty,
+			Url = new Uri("https://www.yottaops.io/"),
+		},
+	});
+});
+
 var app = builder.Build();
 using (IServiceScope scope = app.Services.CreateScope()) {
     scope.ServiceProvider.GetRequiredService<StoreDbContext>().Database.Migrate();
@@ -58,6 +74,20 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Enable middleware to serve generated Swagger as a JSON endpoint.
+app.UseSwagger();
+
+// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+// specifying the Swagger JSON endpoint.
+app.UseSwaggerUI(c =>
+{
+	c.SwaggerEndpoint("/swagger/v1/swagger.json", "SuspendedStorefront API V1");
+
+	// To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
+	c.RoutePrefix = string.Empty;
+});
+
 
 app.MapControllerRoute(
     name: "default",

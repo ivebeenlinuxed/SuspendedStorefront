@@ -6,7 +6,10 @@ using SuspendedStorefront.Services;
 
 namespace SuspendedStorefront.Controllers;
 
-class SubscriptionController : ControllerBase {
+
+[ApiController]
+[Route("/api/[controller]")]
+public class SubscriptionController : ControllerBase {
     private readonly ISubscriptionService subscriptionService;
 
     public SubscriptionController(ISubscriptionService productService)
@@ -31,6 +34,8 @@ class SubscriptionController : ControllerBase {
 
         }
 
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ProductSubscription> GetByID(Guid id) =>
             await this.subscriptionService.GetByIDAsync(id);
 
