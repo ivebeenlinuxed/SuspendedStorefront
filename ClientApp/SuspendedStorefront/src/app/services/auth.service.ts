@@ -88,12 +88,7 @@ export class AuthService {
     // 0. LOAD CONFIG:
     // First we have to check to see how the IdServer is
     // currently configured:
-    return this.oauthService.loadDiscoveryDocument()
-
-      // 1. HASH LOGIN:
-      // Try to log in via hash fragment after redirect back
-      // from IdServer from initImplicitFlow:
-      .then(() => this.oauthService.tryLogin())
+    return this.oauthService.loadDiscoveryDocumentAndTryLogin()
 
       .then(() => {
         if (this.oauthService.hasValidAccessToken()) {

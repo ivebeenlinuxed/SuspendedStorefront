@@ -191,6 +191,87 @@ export class CustomerService extends BaseService {
   }
 
   /**
+   * Path part for operation apiCustomerMeGet
+   */
+  static readonly ApiCustomerMeGetPath = '/api/Customer/me';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCustomerMeGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCustomerMeGet$Plain$Response(params?: {
+  }): Observable<StrictHttpResponse<Customer>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CustomerService.ApiCustomerMeGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: 'text/plain'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Customer>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCustomerMeGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCustomerMeGet$Plain(params?: {
+  }): Observable<Customer> {
+
+    return this.apiCustomerMeGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Customer>) => r.body as Customer)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCustomerMeGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCustomerMeGet$Json$Response(params?: {
+  }): Observable<StrictHttpResponse<Customer>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CustomerService.ApiCustomerMeGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Customer>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCustomerMeGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCustomerMeGet$Json(params?: {
+  }): Observable<Customer> {
+
+    return this.apiCustomerMeGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Customer>) => r.body as Customer)
+    );
+  }
+
+  /**
    * Path part for operation apiCustomerIdGet
    */
   static readonly ApiCustomerIdGetPath = '/api/Customer/{id}';

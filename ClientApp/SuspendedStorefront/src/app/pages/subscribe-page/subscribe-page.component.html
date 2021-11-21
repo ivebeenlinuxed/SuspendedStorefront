@@ -1,1 +1,104 @@
-<h1>{{product.name}}</h1>
+<div class="container">
+    <h1 class="display-3">{{product.name}}</h1>
+    <div class="row">
+        <div class="col-xs-12 col-md-4 mb-3">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Total Donated</h5>
+                            <span class="h2 font-weight-bold mb-0">1,254 Units</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                <i class="fas fa-percent"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-4 mb-3">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Charity Demand/Week</h5>
+                            <span class="h2 font-weight-bold mb-0">54 Units</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                <i class="fas fa-percent"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-4 mb-3">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Current Donations/Week</h5>
+                            <span class="h2 font-weight-bold mb-0">45 Units</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                <i class="fas fa-percent"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div *ngIf="product != null">
+        <div *ngIf="this.productSubscription.id == null">
+            <div class="alert alert-success">
+                <p>Thanks for signing up! How many do you want to donate?</p>
+                <input type="number" class="form-control" [(ngModel)]="this.productSubscription.maxSuspendedQuantity" />
+            </div>
+        </div>
+        <div *ngIf="productSubscription.id != null">
+            <div class="alert alert-success">
+                <p>Thank your for your continued donation.</p>
+                <div class="form-group">
+                    <label class="form-label">You are currently donating</label>
+                    <input type="number" class="form-control"
+                        [(ngModel)]="this.productSubscription.maxSuspendedQuantity" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Monday</label>
+            <input type="number" class="form-control" [(ngModel)]="this.productSubscription.mondayQuantity" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Tuesday</label>
+            <input type="number" class="form-control" [(ngModel)]="this.productSubscription.tuesdayQuantity" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Wednesday</label>
+            <input type="number" class="form-control" [(ngModel)]="this.productSubscription.wednesdayQuantity" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Thursday</label>
+            <input type="number" class="form-control" [(ngModel)]="this.productSubscription.thursdayQuantity" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Friday</label>
+            <input type="number" class="form-control" [(ngModel)]="this.productSubscription.fridayQuantity" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Saturday</label>
+            <input type="number" class="form-control" [(ngModel)]="this.productSubscription.saturdayQuantity" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Sunday</label>
+            <input type="number" class="form-control" [(ngModel)]="this.productSubscription.sundayQuantity" />
+        </div>
+        <button class="btn btn-success mt-3" (click)="save()">Save</button>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 using System.Net.Mime;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SuspendedStorefront.Models;
@@ -38,15 +39,16 @@ public class ProductController : ControllerBase {
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<Product> GetByID(Guid id, [FromQuery]Guid? customerID=null) {
-            if (customerID != null)
+        public async Task<Product> GetByID(Guid id, [FromQuery]bool asMe=false) {
+            if (asMe && HttpContext.User.Identity.IsAuthenticated)
             {
-                return await this.customerService.GetProductAsCustomer(id, (Guid)customerID);
+                return await this.customerService.GetProductAsCustomer(id, (await customerService.GetByLoginIDAsync(HttpContext.User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value)).ID);
             } else {
                 
                 return await this.productService.GetByIDAsync(id);
             }
         }
+
 
 
         [HttpPatch("{id}")]

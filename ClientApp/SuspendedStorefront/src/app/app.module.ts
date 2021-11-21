@@ -16,6 +16,10 @@ import { authConfig } from 'src/auth/auth-config';
 import { AuthService } from './services/auth.service';
 import { authAppInitializerFactory } from 'src/auth/authAppInitializerFactory';
 import { authModuleConfig } from 'src/auth/authModuleConfig';
+import { CurrentCustomerService } from './services/current-customer.service';
+import { SubscribeThanksPageComponent } from './pages/subscribe-thanks-page/subscribe-thanks-page.component';
+import { MeSubscriptionPageComponent } from './pages/me-subscription-page/me-subscription-page.component';
+import { MeCharityPageComponent } from './pages/me-charity-page/me-charity-page.component';
 export function storageFactory(): OAuthStorage {
   return localStorage;
 }
@@ -26,7 +30,10 @@ export function storageFactory(): OAuthStorage {
     HomePageComponent,
     ProductAdminComponent,
     ProductAddComponent,
-    SubscribePageComponent
+    SubscribePageComponent,
+    SubscribeThanksPageComponent,
+    MeSubscriptionPageComponent,
+    MeCharityPageComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +47,9 @@ export function storageFactory(): OAuthStorage {
   { provide: APP_INITIALIZER, useFactory: authAppInitializerFactory, deps: [AuthService], multi: true },
   { provide: AuthConfig, useValue: authConfig },
   { provide: OAuthModuleConfig, useValue: authModuleConfig },
-  { provide: OAuthStorage, useFactory: storageFactory }],
+    { provide: OAuthStorage, useFactory: storageFactory },
+    {provide: CurrentCustomerService}],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

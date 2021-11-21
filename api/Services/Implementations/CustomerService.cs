@@ -39,7 +39,7 @@ class CustomerService : ICustomerService
 
     public async Task<Product> GetProductAsCustomer(Guid productID, Guid customerID) {
         Product p = await ctx.Products.FirstOrDefaultAsync(p => p.ID == productID);
-        p.Subscriptions = await ctx.ProductSubscriptions.Where(ps => ps.ProductID == productID && ps.CustomerID == customerID).ToListAsync();
+        p.Subscriptions = await ctx.ProductSubscriptions.Where(ps => ps.ProductID == productID && ps.CustomerID == customerID && ps.IsActive).ToListAsync();
         return p;
     }
 

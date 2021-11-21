@@ -15,6 +15,7 @@ class SubscriptionService : ISubscriptionService
     public async Task<ProductSubscription> AddSubscriptionAsync(ProductSubscription subscription)
     {
         subscription.ID = Guid.NewGuid();
+        subscription.IsActive = true;
         this.ctx.Entry(subscription).State = Microsoft.EntityFrameworkCore.EntityState.Added;
         await this.ctx.SaveChangesAsync();
         return subscription;
@@ -23,6 +24,10 @@ class SubscriptionService : ISubscriptionService
     public Task<List<ProductSubscriptionReceipt>> ExecuteForDayAsync(DateTime executeDate)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<ProductSubscription>> GetActiveByCustomerAsync(Guid customerID) {
+        return await this.ctx.ProductSubscriptions.Include(ps => ps.Product).Where(c => c.IsActive && c.CustomerID == customerID).ToListAsync();
     }
 
     public async Task<IEnumerable<ProductSubscription>> GetActiveAsync()
@@ -35,8 +40,24 @@ class SubscriptionService : ISubscriptionService
         return await this.ctx.ProductSubscriptions.FirstOrDefaultAsync(c => c.ID == id);
     }
 
+    public async Task MarkInactiveAsync(Guid subscriptionID)
+    {
+        ProductSubscription original = await this.GetByIDAsync(subscriptionID);
+        if (!original.IsActive) {
+            throw new ArgumentException("This item is not active and cannot be deactivated");
+        }
+        original.IsActive = false;
+        this.ctx.Entry(original).State = EntityState.Modified;
+        await this.ctx.SaveChangesAsync();
+
+
+    }
+
     public async Task<ProductSubscription> UpdateAsync(ProductSubscription ps)
     {
+        if (ps.MaxSuspendedQuantity+ps.MondayQuantity+ps.TuesdayQuantity+ps.WednesdayQuantity+ps.ThursdayQuantity+ps.FridayQuantity+ps.SaturdayQuantity+ps.SundayQuantity == 0) {
+            throw new ArgumentException("Cannot update to no deliveries. Delete the subscription instead.");
+        }
         ProductSubscription original = await this.GetByIDAsync(ps.ID);
         if (!ps.IsActive && original.IsActive) {
             //If the customer is cancelling their product

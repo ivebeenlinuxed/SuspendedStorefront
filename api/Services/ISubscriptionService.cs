@@ -9,5 +9,8 @@ namespace SuspendedStorefront.Services
         Task<ProductSubscription> AddSubscriptionAsync(ProductSubscription subscription);
         Task<ProductSubscription> GetByIDAsync(Guid id);
         Task<ProductSubscription> UpdateAsync(ProductSubscription ps);
+
+        Task MarkInactiveAsync(Guid subscriptionID);
+        Task<IEnumerable<ProductSubscription>> GetActiveByCustomerAsync(Guid customerID);
     }
 }
