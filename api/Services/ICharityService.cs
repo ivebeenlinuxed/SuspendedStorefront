@@ -14,5 +14,9 @@ namespace SuspendedStorefront.Services
 
         Task<Charity> SetInactiveByIDAsync(Guid ID);
         Task<IEnumerable<Charity>> GetActiveAsync();
+        Task<Charity> SetApprovedByIDAsync(Guid ID);
+        Task<IEnumerable<Charity>> GetActiveByCustomerIDAsync(Guid customerID);
+        Task<CharityProduct> AddDonationRequestAsync(CharityProduct charityProduct);
+        Task<CharityProduct> CancelDonationRequestByIDAsync(Guid id);
     }
 }

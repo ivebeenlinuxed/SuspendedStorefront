@@ -10,5 +10,10 @@ namespace SuspendedStorefront.Models
         public int WeeklyQuantity { get; set; }
 
         public bool IsActive { get; set; }
+
+        public DateTime LastDelivery { get; set; }
+
+        public Charity Charity { get; set; }
+        public Product Product { get; set; }
     }
 }

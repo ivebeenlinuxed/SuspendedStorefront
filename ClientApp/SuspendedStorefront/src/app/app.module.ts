@@ -20,6 +20,7 @@ import { CurrentCustomerService } from './services/current-customer.service';
 import { SubscribeThanksPageComponent } from './pages/subscribe-thanks-page/subscribe-thanks-page.component';
 import { MeSubscriptionPageComponent } from './pages/me-subscription-page/me-subscription-page.component';
 import { MeCharityPageComponent } from './pages/me-charity-page/me-charity-page.component';
+import { CharityAddComponent } from './components/charity-add/charity-add.component';
 export function storageFactory(): OAuthStorage {
   return localStorage;
 }
@@ -33,7 +34,8 @@ export function storageFactory(): OAuthStorage {
     SubscribePageComponent,
     SubscribeThanksPageComponent,
     MeSubscriptionPageComponent,
-    MeCharityPageComponent
+    MeCharityPageComponent,
+    CharityAddComponent
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,6 @@ namespace SuspendedStorefront.Models
 {
     public class Customer {
         public Guid ID { get; set; }
-
         public string AuthID { get; set; }
         public string Name { get; set; }
         public string PictureURL { get; set; }
@@ -11,7 +10,7 @@ namespace SuspendedStorefront.Models
         public string City { get; set; } = "";
         public string County { get; set; } = "";
         public string PostalCode { get; set; } = "";
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
         public IEnumerable<ProductSubscription> ProductSubscriptions { get; set; }
     }

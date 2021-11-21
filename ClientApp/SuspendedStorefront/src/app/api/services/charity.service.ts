@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { Charity } from '../models/charity';
+import { CharityProduct } from '../models/charity-product';
 
 @Injectable({
   providedIn: 'root',
@@ -110,17 +111,199 @@ export class CharityService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiCharityPost()` instead.
+   * To access only the response body, use `apiCharityPost$Plain()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  apiCharityPost$Response(params?: {
+  apiCharityPost$Plain$Response(params?: {
     body?: Charity
-  }): Observable<StrictHttpResponse<void>> {
+  }): Observable<StrictHttpResponse<Charity>> {
 
     const rb = new RequestBuilder(this.rootUrl, CharityService.ApiCharityPostPath, 'post');
     if (params) {
       rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: 'text/plain'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Charity>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCharityPost$Plain$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  apiCharityPost$Plain(params?: {
+    body?: Charity
+  }): Observable<Charity> {
+
+    return this.apiCharityPost$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Charity>) => r.body as Charity)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCharityPost$Json()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  apiCharityPost$Json$Response(params?: {
+    body?: Charity
+  }): Observable<StrictHttpResponse<Charity>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CharityService.ApiCharityPostPath, 'post');
+    if (params) {
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Charity>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCharityPost$Json$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  apiCharityPost$Json(params?: {
+    body?: Charity
+  }): Observable<Charity> {
+
+    return this.apiCharityPost$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Charity>) => r.body as Charity)
+    );
+  }
+
+  /**
+   * Path part for operation apiCharityIdCharityProductPost
+   */
+  static readonly ApiCharityIdCharityProductPostPath = '/api/Charity/{id}/charity_product';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCharityIdCharityProductPost$Plain()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  apiCharityIdCharityProductPost$Plain$Response(params: {
+    id: string;
+    body?: CharityProduct
+  }): Observable<StrictHttpResponse<CharityProduct>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CharityService.ApiCharityIdCharityProductPostPath, 'post');
+    if (params) {
+      rb.path('id', params.id, {});
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: 'text/plain'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<CharityProduct>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCharityIdCharityProductPost$Plain$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  apiCharityIdCharityProductPost$Plain(params: {
+    id: string;
+    body?: CharityProduct
+  }): Observable<CharityProduct> {
+
+    return this.apiCharityIdCharityProductPost$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<CharityProduct>) => r.body as CharityProduct)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCharityIdCharityProductPost$Json()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  apiCharityIdCharityProductPost$Json$Response(params: {
+    id: string;
+    body?: CharityProduct
+  }): Observable<StrictHttpResponse<CharityProduct>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CharityService.ApiCharityIdCharityProductPostPath, 'post');
+    if (params) {
+      rb.path('id', params.id, {});
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<CharityProduct>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCharityIdCharityProductPost$Json$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  apiCharityIdCharityProductPost$Json(params: {
+    id: string;
+    body?: CharityProduct
+  }): Observable<CharityProduct> {
+
+    return this.apiCharityIdCharityProductPost$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<CharityProduct>) => r.body as CharityProduct)
+    );
+  }
+
+  /**
+   * Path part for operation apiCharityCharityIdCharityProductCharityProductIdDelete
+   */
+  static readonly ApiCharityCharityIdCharityProductCharityProductIdDeletePath = '/api/Charity/{charityID}/charity_product/{charityProductID}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCharityCharityIdCharityProductCharityProductIdDelete()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCharityCharityIdCharityProductCharityProductIdDelete$Response(params: {
+    charityID: string;
+    charityProductID: string;
+  }): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CharityService.ApiCharityCharityIdCharityProductCharityProductIdDeletePath, 'delete');
+    if (params) {
+      rb.path('charityID', params.charityID, {});
+      rb.path('charityProductID', params.charityProductID, {});
     }
 
     return this.http.request(rb.build({
@@ -136,15 +319,16 @@ export class CharityService extends BaseService {
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiCharityPost$Response()` instead.
+   * To access the full response (for headers, for example), `apiCharityCharityIdCharityProductCharityProductIdDelete$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
-  apiCharityPost(params?: {
-    body?: Charity
+  apiCharityCharityIdCharityProductCharityProductIdDelete(params: {
+    charityID: string;
+    charityProductID: string;
   }): Observable<void> {
 
-    return this.apiCharityPost$Response(params).pipe(
+    return this.apiCharityCharityIdCharityProductCharityProductIdDelete$Response(params).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
@@ -243,14 +427,14 @@ export class CharityService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiCharityIdPatch()` instead.
+   * To access only the response body, use `apiCharityIdPatch$Plain()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  apiCharityIdPatch$Response(params: {
+  apiCharityIdPatch$Plain$Response(params: {
     id: string;
     body?: Charity
-  }): Observable<StrictHttpResponse<void>> {
+  }): Observable<StrictHttpResponse<Charity>> {
 
     const rb = new RequestBuilder(this.rootUrl, CharityService.ApiCharityIdPatchPath, 'patch');
     if (params) {
@@ -260,28 +444,72 @@ export class CharityService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*'
+      accept: 'text/plain'
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+        return r as StrictHttpResponse<Charity>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiCharityIdPatch$Response()` instead.
+   * To access the full response (for headers, for example), `apiCharityIdPatch$Plain$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  apiCharityIdPatch(params: {
+  apiCharityIdPatch$Plain(params: {
     id: string;
     body?: Charity
-  }): Observable<void> {
+  }): Observable<Charity> {
 
-    return this.apiCharityIdPatch$Response(params).pipe(
-      map((r: StrictHttpResponse<void>) => r.body as void)
+    return this.apiCharityIdPatch$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Charity>) => r.body as Charity)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCharityIdPatch$Json()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  apiCharityIdPatch$Json$Response(params: {
+    id: string;
+    body?: Charity
+  }): Observable<StrictHttpResponse<Charity>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CharityService.ApiCharityIdPatchPath, 'patch');
+    if (params) {
+      rb.path('id', params.id, {});
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Charity>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCharityIdPatch$Json$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  apiCharityIdPatch$Json(params: {
+    id: string;
+    body?: Charity
+  }): Observable<Charity> {
+
+    return this.apiCharityIdPatch$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Charity>) => r.body as Charity)
     );
   }
 

@@ -89,12 +89,12 @@ export class AuthService {
     // First we have to check to see how the IdServer is
     // currently configured:
     return this.oauthService.loadDiscoveryDocumentAndTryLogin()
-
+/*
       .then(() => {
         if (this.oauthService.hasValidAccessToken()) {
           return Promise.resolve();
         }
-
+        
         // 2. SILENT LOGIN:
         // Try to log in via a refresh because then we can prevent
         // needing to redirect the user:
@@ -132,7 +132,7 @@ export class AuthService {
             // next handler.
             return Promise.reject(result);
           });
-      })
+      })*/
 
       .then(() => {
         this.isDoneLoadingSubject$.next(true);

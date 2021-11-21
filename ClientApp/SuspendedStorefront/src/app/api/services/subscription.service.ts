@@ -279,6 +279,93 @@ export class SubscriptionService extends BaseService {
   }
 
   /**
+   * Path part for operation apiSubscriptionIdDelete
+   */
+  static readonly ApiSubscriptionIdDeletePath = '/api/Subscription/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiSubscriptionIdDelete$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubscriptionIdDelete$Plain$Response(params: {
+    id: string;
+  }): Observable<StrictHttpResponse<Product>> {
+
+    const rb = new RequestBuilder(this.rootUrl, SubscriptionService.ApiSubscriptionIdDeletePath, 'delete');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: 'text/plain'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Product>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiSubscriptionIdDelete$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubscriptionIdDelete$Plain(params: {
+    id: string;
+  }): Observable<Product> {
+
+    return this.apiSubscriptionIdDelete$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Product>) => r.body as Product)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiSubscriptionIdDelete$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubscriptionIdDelete$Json$Response(params: {
+    id: string;
+  }): Observable<StrictHttpResponse<Product>> {
+
+    const rb = new RequestBuilder(this.rootUrl, SubscriptionService.ApiSubscriptionIdDeletePath, 'delete');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Product>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiSubscriptionIdDelete$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubscriptionIdDelete$Json(params: {
+    id: string;
+  }): Observable<Product> {
+
+    return this.apiSubscriptionIdDelete$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Product>) => r.body as Product)
+    );
+  }
+
+  /**
    * Path part for operation apiSubscriptionIdPatch
    */
   static readonly ApiSubscriptionIdPatchPath = '/api/Subscription/{id}';
